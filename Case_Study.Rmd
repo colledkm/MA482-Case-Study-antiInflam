@@ -15,6 +15,8 @@ reyes482:::ma482_setup()
 Kathi WAS HEREM
 Katana was here
 
+Emily Was Here!
+
 ## Problem 1 (use 2 hashtags for problem delimiters)
 
 ### Part (a) (use 3 hashtags for part delimiters)
