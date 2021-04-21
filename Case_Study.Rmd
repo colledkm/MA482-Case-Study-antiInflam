@@ -12,6 +12,7 @@ output: reyes482::ma482_word_format
 reyes482:::ma482_setup()
 ```
 
+Kathi WAS HERE
 
 ## Problem 1 (use 2 hashtags for problem delimiters)
 
