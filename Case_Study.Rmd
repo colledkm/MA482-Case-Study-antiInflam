@@ -1,32 +1,26 @@
 ---
 title: "Case Study"
 subtitle: "Biostatistics (MA482/BE482)"
-author: "Emily Bartling, Katana Colledge and Kathi Munoz-Hofmann"
+author: "Wenxing Li, Katana Colledge, Pascal Liberge, and John Garrett"
 date: "Updated: `r Sys.Date()`"
 output: reyes482::ma482_word_format
 ---
 
 ```{r setup, include=FALSE}
-# Note to Students:
-#  Do not alter this block of code.
 reyes482:::ma482_setup()
 ```
 
-Kathi WAS HEREM
-Katana was here!!
-
-Emily Was Here!
-
-## Problem 1 (use 2 hashtags for problem delimiters)
-
-### Part (a) (use 3 hashtags for part delimiters)
-There is no need to copy the problem description.  Just type your answers in the white space.
-
-Insert a code chunk using the "Insert" button at the top of the script window.  Place code inside of the resulting block, and you can test the code by hitting the green "play" button at the top-right corner of the code block.  Below is an example.  See the Coding Cookbook on the course site for details on the R code to use.
-
 ```{r}
-cars %>% 
-  summarise(`Mean Speed` = mean(speed))
+library(haven)
+AD <- read_sav('NEDICES.sav')
 ```
 
-Make sure there is always a blank line between plain text and a code block.  When your assignment is complete, click the "knit" button at the top of the script window.
+```{r}
+fit.AD <- coxph(Surv(fdefuncion, evital)~ education+bii1 +Pfeffer_1 + Comor12 + ii1 , data = AD)
+#Couldn't find the cerebrovascular disease predictor
+
+tidy(fit.AD, conf.int = TRUE, conf.level = 0.95,exponentiate = TRUE)
+
+```
+
+
