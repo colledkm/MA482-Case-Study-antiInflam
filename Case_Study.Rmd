@@ -13,6 +13,8 @@ reyes482:::ma482_setup()
 ```{r}
 library(haven)
 AD <- read_sav('NEDICES.sav')
+
+AD <- AD[- grep(0, AD$AD),] #Exculed the original 206 diagnosed with Alzheimers
 ```
 
 ```{r}
