@@ -24,3 +24,10 @@ tidy(fit.AD, conf.int = TRUE, conf.level = 0.95,exponentiate = TRUE)
 ```
 
 
+```{r}
+fit2.AD <- coxph(Surv(fdefuncion, evital)~ age + sex +education + a1 + bii1 + bii1dd + bi1 + bi1d + mmpun + Comor12 + ii1 + ii2 + stroke_1, data = AD)
+
+#Note: The living area and marital status predictors are not present in the published data
+
+tidy(fit2.AD, conf.int = TRUE, conf.level = 0.95,exponentiate = TRUE)
+```
