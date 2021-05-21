@@ -26,21 +26,11 @@ AD <- read_sav('NEDICES.sav')
 * rate their health (combine into 3 catagories: good/very good, fair, poor/very poor)  I don't like that they did that
 * neurological disrders
 *exlcuded 206 with AD diagnosed or detected by NEDICES so 5072 participants remaining
+
+## Cleaning data
 ```{r}
 AD <- AD[- grep(0, AD$AD),] #Exculed the original 206 diagnosed with Alzheimer
 
-AD %>% mutate_if(is.character, str_to_upper) -> AD
-
-AD <- mutate(AD,
-             `NSAID` = str_detect(drug_1, "(ASPIRIN)|(DICLOFENAC)|(PIROXICAM)|(ACECLOFENAC)|(TENOXICAM)|(INDOMETHACIN)|(NAPROXEN)|(NABUMETONE)|(FLURBIPOFEN)|(IBUPROFEN)|(KETOPROFEN)|(KETOROLAC)|(DROXICAM)|(NEKIXICAM)|(SULINDAC)|(NIFLUMIC ACID)|(ACEMETACIN)|(ISONIXIN)") |
-               str_detect(drug_2, "(ASPIRIN)|(DICLOFENAC)|(PIROXICAM)|(ACECLOFENAC)|(TENOXICAM)|(INDOMETHACIN)|(NAPROXEN)|(NABUMETONE)|(FLURBIPOFEN)|(IBUPROFEN)|(KETOPROFEN)|(KETOROLAC)|(DROXICAM)|(NEKIXICAM)|(SULINDAC)|(NIFLUMIC ACID)|(ACEMETACIN)|(ISONIXIN)") |
-               str_detect(drug_3, "(ASPIRIN)|(DICLOFENAC)|(PIROXICAM)|(ACECLOFENAC)|(TENOXICAM)|(INDOMETHACIN)|(NAPROXEN)|(NABUMETONE)|(FLURBIPOFEN)|(IBUPROFEN)|(KETOPROFEN)|(KETOROLAC)|(DROXICAM)|(NEKIXICAM)|(SULINDAC)|(NIFLUMIC ACID)|(ACEMETACIN)|(ISONIXIN)") |
-               str_detect(drug_4, "(ASPIRIN)|(DICLOFENAC)|(PIROXICAM)|(ACECLOFENAC)|(TENOXICAM)|(INDOMETHACIN)|(NAPROXEN)|(NABUMETONE)|(FLURBIPOFEN)|(IBUPROFEN)|(KETOPROFEN)|(KETOROLAC)|(DROXICAM)|(NEKIXICAM)|(SULINDAC)|(NIFLUMIC ACID)|(ACEMETACIN)|(ISONIXIN)") |
-               str_detect(drug_5, "(ASPIRIN)|(DICLOFENAC)|(PIROXICAM)|(ACECLOFENAC)|(TENOXICAM)|(INDOMETHACIN)|(NAPROXEN)|(NABUMETONE)|(FLURBIPOFEN)|(IBUPROFEN)|(KETOPROFEN)|(KETOROLAC)|(DROXICAM)|(NEKIXICAM)|(SULINDAC)|(NIFLUMIC ACID)|(ACEMETACIN)|(ISONIXIN)") |
-               str_detect(drug_6, "(ASPIRIN)|(DICLOFENAC)|(PIROXICAM)|(ACECLOFENAC)|(TENOXICAM)|(INDOMETHACIN)|(NAPROXEN)|(NABUMETONE)|(FLURBIPOFEN)|(IBUPROFEN)|(KETOPROFEN)|(KETOROLAC)|(DROXICAM)|(NEKIXICAM)|(SULINDAC)|(NIFLUMIC ACID)|(ACEMETACIN)|(ISONIXIN)"))
-```
-
-```{r}
 #make death only (evital==1)
 AD <- AD[AD$evital==1,]
 ```
@@ -78,22 +68,22 @@ NSAIDs <- c("Asprin", "aspirina", "Bayer", "adiro", "tromalyt",
             "Sulindac", "clinoril",
             "tolemtin", "tolectin"
             )
-NSAIDs <- tolower(NSAIDs)
+NSAIDs <- toupper(NSAIDs)
 
 #make all drug columns lowercase in r
-AD$drug_1 = tolower(AD$drug_1)
-AD$drug_2 = tolower(AD$drug_2)
-AD$drug_3 = tolower(AD$drug_3)
-AD$drug_4 = tolower(AD$drug_4)
-AD$drug_5 = tolower(AD$drug_5)
-AD$drug_6 = tolower(AD$drug_6)
+AD$drug_1 = toupper(AD$drug_1)
+AD$drug_2 = toupper(AD$drug_2)
+AD$drug_3 = toupper(AD$drug_3)
+AD$drug_4 = toupper(AD$drug_4)
+AD$drug_5 = toupper(AD$drug_5)
+AD$drug_6 = toupper(AD$drug_6)
 
-AD[grepl(paste(NSAIDs, collapse="|"), 
-         paste(AD$drug_1, AD$drug_2, AD$drug_3, AD$drug_4, AD$drug_5, AD$drug_6)),]
+AD$NSAIDs <- grepl(paste(NSAIDs, collapse="|"), 
+         paste(AD$drug_1, AD$drug_2, AD$drug_3, AD$drug_4, AD$drug_5, AD$drug_6))
 
 ```
 
-
+If NSAIDs is True then they took a NSAIDs, if false then they probably did not take one.Only found 328 out of the 504.  Plus the study was done in spain and I'm having a hard time finding the spanish names for things.
 
 ## Goal
 We aimed to reevaluate the existing uncertainty regarding the effects of NSAIDs use on risk of AD by examining whether AD mortality is decreased in NSAIDs users compared to non-users.
