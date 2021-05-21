@@ -50,7 +50,7 @@ Therefore, although mean and median values were reported, differences were compa
 
 
 ```{r}
-fit.AD <- coxph(Surv(fdefuncion, evital)~ education+bii1 +Pfeffer_1 + Comor12 + ii1 , data = AD)
+fit.AD <- coxph(Surv(fdefuncion, evital)~ education+bii1 +Pfeffer_1 + Comor12 + ii1 + NSAID, data = AD)
 #Couldn't find the cerebrovascular disease predictor
 
 tidy(fit.AD, conf.int = TRUE, conf.level = 0.95,exponentiate = TRUE)
@@ -59,9 +59,26 @@ tidy(fit.AD, conf.int = TRUE, conf.level = 0.95,exponentiate = TRUE)
 
 
 ```{r}
-fit2.AD <- coxph(Surv(fdefuncion, evital)~ age + sex +education + a1 + bii1 + bii1dd + bi1 + bi1d + mmpun + Comor12 + ii1 + ii2 + stroke_1, data = AD)
+fit2.AD <- coxph(Surv(fdefuncion, evital)~ age + sex +education + a1 + bii1 + bii1dd + bi1 + bi1d + mmpun + Comor12 + ii1 + ii2 + stroke_1 + NSAID, data = AD)
 
 #Note: The living area and marital status predictors are not present in the published data
 
 tidy(fit2.AD, conf.int = TRUE, conf.level = 0.95,exponentiate = TRUE)
+```
+
+
+
+```{r}
+AD.km <- survfit(Surv(fdefuncion, evital) ~ NSAID, data = AD) %>%
+  tidy() %>%
+  mutate(strata = recode (strata,
+                          "NSAID=FALSE" = "Without NSAID",
+                          "NSAID=TRUE" = "With NSAID"))
+
+ggplot(data = AD.km,
+       mapping = aes(y = estimate, x = time, color = strata)) + geom_step(size = 1.25) +
+  labs(y = "Survival",
+       x = "Time Since First Assessment",
+       color = "") +
+  scale_color_brewer(type = "qual", palette = "Dark2")
 ```
