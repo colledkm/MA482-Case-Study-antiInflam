@@ -14,8 +14,31 @@ reyes482:::ma482_setup()
 library(haven)
 AD <- read_sav('NEDICES.sav')
 
-AD <- AD[- grep(0, AD$AD),] #Exculed the original 206 diagnosed with Alzheimers
 ```
+
+### Data modifications
+
+* demographics
+* current medical consitions
+* smoking (ever vs never)
+* drinker (ever/at least once per week vs. never)
+* medication
+* rate their health (combine into 3 catagories: good/very good, fair, poor/very poor)  I don't like that they did that
+* neurological disrders
+*exlcuded 206 with AD diagnosed or detected by NEDICES so 5072 participants remaining
+```{r}
+AD <- AD[- grep(0, AD$AD),] #Exculed the original 206 diagnosed with Alzheimer
+
+```
+
+## Goal
+We aimed to reevaluate the existing uncertainty regarding the effects of NSAIDs use on risk of AD by examining whether AD mortality is decreased in NSAIDs users compared to non-users.
+
+## Analysis
+
+Therefore, although mean and median values were reported, differences were compared using a nonparametric (Mann–Whitney U and Kruskal Wallis tests). The chi-square or Fisher p tests were used to analyze categorical variables. Participants were divided in NSAIDs users and non-users (reference category). And 95% CI.
+
+
 
 ```{r}
 fit.AD <- coxph(Surv(fdefuncion, evital)~ education+bii1 +Pfeffer_1 + Comor12 + ii1 , data = AD)
