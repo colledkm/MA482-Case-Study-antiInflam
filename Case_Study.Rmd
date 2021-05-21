@@ -31,6 +31,61 @@ AD <- AD[- grep(0, AD$AD),] #Exculed the original 206 diagnosed with Alzheimer
 
 ```
 
+```{r}
+#make death only (evital==1)
+AD <- AD[AD$evital==1,]
+```
+
+
+```{r}
+# https://www.drugs.com/drug-class/nonsteroidal-anti-inflammatory-agents.html
+
+# list of NSAIDs
+NSAIDs <- c("Asprin", "aspirina", "Bayer", "adiro", "tromalyt",
+            "Acemetacin",
+            "acetaminophen","paracetamol", "gelocatil",
+            "Aceclofenac", 
+            "Diclofenac", "voltaren", "cambia", "cataflam", "arthrotec", "zipsor", "zorvolex", "dyloject",
+            "Droxicam",
+            "diflunisal", "dolobid",
+            "etodolac", "lodine",
+            "Flurbiprofen", "ansaid",
+            "fenoprofen", "nalfon", "profeno","fenortho",
+            "Ibuprofen", "advil", "motrin", "IBU", "Motrin", "duexis", "advil", "ibu", "profen","proprinal", "nuprin", "midol", "haltran", "genpril", "caldolor", "addaprin", "actiprofren",
+            "Isonixin",
+            "Indomethacin", "indocin", "tivorbex",
+            "Ketoprofen", "orudis", "oruvail",
+            "Ketorolac", "Toradol", "sprix",
+            "Tenoxicam", 
+            "Meloxicam","mobic", "vivlodex", "qmiiz", "anjeso",
+            "metamizole", "nolotil",
+            "mefenamic", "ponstel",
+            "Naproxen", "aleve", "vimovo", "anaprox","midol", "flanax", "prevacid", "naprosyn", "relief", "aflaxen",
+            "Nabumetone", "naprosyn","relafen",
+            "Niflumic acid",
+            "oxaprozin","daypro",
+            "Piroxicam", "feldrne",
+            "Pentoxifylline","trental", "hemovas",
+            "Sulindac", "clinoril",
+            "tolemtin", "tolectin"
+            )
+NSAIDs <- tolower(NSAIDs)
+
+#make all drug columns lowercase in r
+AD$drug_1 = tolower(AD$drug_1)
+AD$drug_2 = tolower(AD$drug_2)
+AD$drug_3 = tolower(AD$drug_3)
+AD$drug_4 = tolower(AD$drug_4)
+AD$drug_5 = tolower(AD$drug_5)
+AD$drug_6 = tolower(AD$drug_6)
+
+AD[grepl(paste(NSAIDs, collapse="|"), 
+         paste(AD$drug_1, AD$drug_2, AD$drug_3, AD$drug_4, AD$drug_5, AD$drug_6)),]
+
+```
+
+
+
 ## Goal
 We aimed to reevaluate the existing uncertainty regarding the effects of NSAIDs use on risk of AD by examining whether AD mortality is decreased in NSAIDs users compared to non-users.
 
@@ -38,7 +93,8 @@ We aimed to reevaluate the existing uncertainty regarding the effects of NSAIDs 
 
 Therefore, although mean and median values were reported, differences were compared using a nonparametric (Mann–Whitney U and Kruskal Wallis tests). The chi-square or Fisher p tests were used to analyze categorical variables. Participants were divided in NSAIDs users and non-users (reference category). And 95% CI.
 
-
+evital - censoring
+fdefunction - death date
 
 ```{r}
 fit.AD <- coxph(Surv(fdefuncion, evital)~ education+bii1 +Pfeffer_1 + Comor12 + ii1 , data = AD)
