@@ -78,7 +78,7 @@ AD$drug_4 = toupper(AD$drug_4)
 AD$drug_5 = toupper(AD$drug_5)
 AD$drug_6 = toupper(AD$drug_6)
 
-AD$NSAIDs <- grepl(paste(NSAIDs, collapse="|"), 
+AD$NSAID <- grepl(paste(NSAIDs, collapse="|"), 
          paste(AD$drug_1, AD$drug_2, AD$drug_3, AD$drug_4, AD$drug_5, AD$drug_6))
 
 ```
@@ -91,6 +91,27 @@ We aimed to reevaluate the existing uncertainty regarding the effects of NSAIDs 
 ## Analysis
 
 Therefore, although mean and median values were reported, differences were compared using a nonparametric (Mann–Whitney U and Kruskal Wallis tests). The chi-square or Fisher p tests were used to analyze categorical variables. Participants were divided in NSAIDs users and non-users (reference category). And 95% CI.
+
+```{r}
+#make sure the stuff that is a factor is labeled as such
+#double check these
+AD$center <- factor(AD$center)
+AD$sex <- factor(AD$sex)
+AD$education <- factor(AD$education)
+AD$a1 <- factor(AD$a1)
+AD$ii1 <- factor(AD$ii1)
+AD$ii2 <- factor(AD$ii2)
+AD$bi1 <- factor(AD$bi1)
+AD$bi1d <- factor(AD$bi1d)
+AD$bii1 <- factor(AD$bii1)
+AD$bii1dd <- factor(AD$bii1dd)
+#AD$mmpun <- factor(AD$mmpun)
+AD$AD <- factor(AD$AD)
+AD$Comor12 <- factor(AD$Comor12)
+AD$Pfeffer_1 <- factor(AD$Pfeffer_1)
+AD$stroke_1 <- factor(AD$stroke_1)
+AD$dement_prev <- factor(AD$dement_prev)
+```
 
 evital - censoring
 fdefunction - death date
